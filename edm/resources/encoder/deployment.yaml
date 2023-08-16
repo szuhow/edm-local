@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: encoder
+spec:
+  selector:
+    matchLabels:
+      app: encoder
+  template:
+    metadata:
+      labels:
+        app: encoder
+    spec:
+      containers:
+        - name: encoder
+          image: encoder
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: 200m
+            limits:
+              memory: "256Mi"
+              cpu: 500m
+          envFrom:
+            - configMapRef:
+                name: encoder-cm
+            - secretRef:
+                name: encoder-secret
+          volumeMounts:
+            - mountPath: "/etc/userkeys"
+              name: encoder-user-keys-volume
+              readOnly: true
+          readinessProbe:
+            exec:
+              command:
+                - "nc"
+                - "-z"
+                - "db"
+                - "5432"
+            initialDelaySeconds: 5
+            periodSeconds: 5
+      volumes:
+        - name: encoder-user-keys-volume
+          secret:
+            secretName: user-keys-secret  # shared secret for encoder and adminer
+      imagePullSecrets:
+        - name: nexus-image-pull

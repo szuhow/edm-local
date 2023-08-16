@@ -1,0 +1,103 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: edm-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 20m
+    nginx.org/client-max-body-size: 20m
+spec:
+  rules:
+    - host: api.test.pomorskie.cgmpolska.pl
+      http:
+        paths:
+          - path: /api/sign
+            pathType: Prefix
+            backend:
+              service:
+                name: encoder
+                port:
+                  number: 8000
+          - path: /api/iti41
+            pathType: Prefix
+            backend:
+              service:
+                name: repository
+                port:
+                  number: 8000
+          - path: /api/iti42
+            pathType: Prefix
+            backend:
+              service:
+                name: registry
+                port:
+                  number: 8080
+          - path: /api/iti43
+            pathType: Prefix
+            backend:
+              service:
+                name: repository
+                port:
+                  number: 8000
+          - path: /api/int/iti43
+            pathType: Prefix
+            backend:
+              service:
+                name: repository
+                port:
+                  number: 8000
+          - path: /api/iti57
+            pathType: Prefix
+            backend:
+              service:
+                name: registry
+                port:
+                  number: 8080
+          - path: /api/iti18
+            pathType: Prefix
+            backend:
+              service:
+                name: registry
+                port:
+                  number: 8080
+          - path: /api/int/iti18
+            pathType: Prefix
+            backend:
+              service:
+                name: registry
+                port:
+                  number: 8080
+          - path: /api/document/sign/
+            pathType: Prefix
+            backend:
+              service:
+                name: signer
+                port:
+                  number: 8088
+          - path: /ehrbase
+            pathType: Prefix
+            backend:
+              service:
+                name: ehrbase
+                port:
+                  number: 8080
+          - path: /ehrcontrol
+            pathType: Prefix
+            backend:
+              service:
+                name: ehrcontrol
+                port:
+                  number: 8080
+          - path: /api/openehr
+            pathType: Prefix
+            backend:
+              service:
+                name: hl7parser
+                port:
+                  number: 8088
+          - path: /internal/api/openehr
+            pathType: Prefix
+            backend:
+              service:
+                name: hl7parser
+                port:
+                  number: 8088

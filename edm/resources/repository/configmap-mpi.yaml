@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: repository-cm-mpi
+data:
+  MPI_SCOPE: "openid"
+  MPI_GRANT_TYPE: "client_credentials"
+  MPI_TOKEN_PATH: "https://auth.test.pomorskie.cgmpolska.pl/auth/realms/internal/protocol/openid-connect/token"
+  MPI_QUERY_PATH: "http://patient-index.cgm:8080/api/fhir/Patient"

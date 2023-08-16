@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: signer
+spec:
+  selector:
+    matchLabels:
+      app: signer
+  template:
+    metadata:
+      labels:
+        app: signer
+    spec:
+      containers:
+        - name: signer
+          image: signer
+          ports:
+            - containerPort: 8088
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: 200m
+            limits:
+              memory: "256Mi"
+              cpu: 500m
+      imagePullSecrets:
+        - name: nexus-image-pull

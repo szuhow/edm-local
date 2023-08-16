@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adminer
+spec:
+  selector:
+    matchLabels:
+      app: adminer
+  template:
+    metadata:
+      labels:
+        app: adminer
+    spec:
+      containers:
+        - name: adminer
+          image: adminer
+          ports:
+            - containerPort: 8009
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: 200m
+            limits:
+              memory: "256Mi"
+              cpu: 500m
+          envFrom:
+            - configMapRef:
+                name: adminer-cm
+            - secretRef:
+                name: adminer-secret
+          volumeMounts:
+            - mountPath: "/etc/userkeys"
+              name: adminer-user-keys-volume
+              readOnly: true
+          readinessProbe:
+            exec:
+              command:
+                - "nc"
+                - "-z"
+                - "db"
+                - "5432"
+            initialDelaySeconds: 5
+            periodSeconds: 5
+      volumes:
+        - name: adminer-user-keys-volume
+          secret:
+            secretName: user-keys-secret  # shared secret for encoder and adminer
+      imagePullSecrets:
+        - name: nexus-image-pull

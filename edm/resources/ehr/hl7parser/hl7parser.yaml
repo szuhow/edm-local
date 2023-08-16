@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hl7parser
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hl7parser
+  template:
+    metadata:
+      labels:
+        app: hl7parser
+    spec:
+      imagePullSecrets:
+        - name: nexus-image-pull
+      containers:
+        - name: hl7parser
+          image: hl7parser
+          ports:
+            - containerPort: 8088
+              name: main
+            - containerPort: 5010
+              name: secondary
+          envFrom:
+            - configMapRef:
+                name: hl7parser-cm
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hl7parser
+spec:
+  type: ClusterIP
+  selector:
+    app: hl7parser
+  ports:
+    - port: 8088
+      targetPort: 8088
+      name: main
+    - port: 5010
+      targetPort: 5010
+      name: secondary

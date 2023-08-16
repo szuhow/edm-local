@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: atna
+  labels:
+    app: atna
+spec:
+  selector:
+    matchLabels:
+      app: atna
+  template:
+    metadata:
+      labels:
+        app: atna
+        auth: ws-security
+    spec:
+      containers:
+        - name: atna
+          image: atna
+          ports:
+            - containerPort: 8008
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "2048Mi"
+              cpu: "1000m"
+          envFrom:
+            - configMapRef:
+                name: atna-cm
+            - secretRef:
+                name: atna-secret
+          readinessProbe:
+            exec:
+              command:
+                - "nc"
+                - "-z"
+                - "db"
+                - "5432"
+            initialDelaySeconds: 5
+            periodSeconds: 5
+      imagePullSecrets:
+        - name: nexus-image-pull

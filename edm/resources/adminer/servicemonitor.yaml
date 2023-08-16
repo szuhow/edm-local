@@ -1,0 +1,12 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: adminer-metrics
+spec:
+  endpoints:
+  - path: /prometheus/adminer/metrics
+    interval: 15s
+    targetPort: 8009
+  selector:
+    matchLabels:
+      metrics: prometheus-adminer-metrics

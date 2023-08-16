@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: db
+spec:
+  serviceName: db
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+        - name: db
+          image: postgres:14-bullseye
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: postgres-img-secret
+          volumeMounts:
+            - name: docker-entrypoint-initdb
+              mountPath: /docker-entrypoint-initdb.d
+      imagePullSecrets:
+        - name: nexus-image-pull
+      volumes:
+        - name: docker-entrypoint-initdb
+          configMap:
+            name: docker-entrypoint-initdb

@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: repository
+  labels:
+    app: repository
+spec:
+  selector:
+    matchLabels:
+      app: repository
+  template:
+    metadata:
+      labels:
+        app: repository
+        auth: ws-security
+    spec:
+      containers:
+        - name: repository
+          image: repository
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "2048Mi"
+              cpu: "1000m"
+          envFrom:
+            - configMapRef:
+                name: repository-cm
+            - configMapRef:
+                name: repository-cm-mpi
+            -  secretRef:
+                name: repository-secret
+            - secretRef:
+                name: repository-secret-mpi
+          volumeMounts:
+            - mountPath: /var/edm/data
+              name: repository
+      volumes:
+        - name: repository
+          persistentVolumeClaim:
+            claimName: pvc-edm-repository
+      imagePullSecrets:
+        - name: nexus-image-pull

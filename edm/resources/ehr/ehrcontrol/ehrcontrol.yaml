@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ehrcontrol
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ehrcontrol
+  template:
+    metadata:
+      labels:
+        app: ehrcontrol
+    spec:
+      containers:
+        - name: ehrcontrol
+          image: ehrcontrol
+          envFrom:
+            - configMapRef:
+                name: ehrcontrol
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ehrcontrol
+spec:
+  type: ClusterIP
+  selector:
+    app: ehrcontrol
+  ports:
+    - port: 8080
+      targetPort: 80
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ehrcontrol
+data:
+  AUTH_METHOD: BASIC
+  EHRBASE_URI: http://ehrbase.ives.svc.cluster.local:8080/ehrbase

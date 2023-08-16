@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: encoder-cm
+data:
+  SQL_DATABASE: encoder_db
+  SQL_ENGINE: django.db.backends.postgresql
+  SQL_HOST: db
+  SQL_PORT: "5432"
+  JWT_VALIDATION_URL: "https://auth.test.pomorskie.cgmpolska.pl/auth/realms/system/protocol/openid-connect/userinfo"
+  # logging configuration
+  DEBUG: "0"
+  LOGLEVEL: "DEBUG"
+  ENV: dev
+  REGIONAL_PLATFORM_KEY_NAME: pr

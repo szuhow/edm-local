@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fhir-bridge-cm
+data:
+  # Eherbase and Minio connection settings
+  FHIR_BRIDGE_OPENEHR_URL: http://ehrbase:8080/ehrbase/
+  FHIR_BRIDGE_OPENEHR_SECURITY_TYPE: 'basic'
+  FHIR_BRIDGE_OPENEHR_SECURITY_TYPE_USER_NAME: 'myuser'
+  FHIR_BRIDGE_MINIO_URL: http://minio:9000
+  FHIR_BRIDGE_MINIO_BUCKET_NAME: fhir-bridge-bucket
+  FHIR_BRIDGE_FHIR_ENDPOINTS_DOCUMENTREFERENCE: 'true'
+  # Logger data
+  LOGGING_LEVEL_ROOT: INFO
+  # Local db settings
+  SPRING_JPA_PROPERTIES_HIBERNATE_SHOW_SQL: 'true'
+  SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: 'org.hibernate.dialect.PostgreSQLDialect'
+  SPRING_JPA_PROPERTIES_HIBERNATE_SEARCH_ENABLED: 'false'
+  SPRING_DATASOURCE_URL: 'jdbc:postgresql://db:5432/fhirbridge'
+  DB_URL: 'jdbc:postgresql://db:5432/fhirbridge'
+  SPRING_DATASOURCE_DRIVER_CLASSS_NAME: 'org.postgresql.Driver'
+  SPRING_DATASOURCE_USERNAME: 'edm-db-admin'
+  SPRING_DATASOURCE_HIKARI_SCHEMA: 'fhirbridge'
+  SPRING_LIQUIBASE_DEFAULT_SCHEMA: 'fhirbridge'
+  SPRING_JPA_PROPERTIES_HIBERNATE_DEFAULT_SCHEMA: 'fhirbridge'
+  POSTGRES_DB: "fhirbridge"
+  POSTGRES_USER: 'edm-db-admin'
+  TZ: Europe/Warsaw

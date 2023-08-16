@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hl7parser-cm
+data:
+  KEYCLOAK_REALM: "internal"
+  KEYCLOAK_AUTH-SERVER-URL: "https://auth.test.pomorskie.cgmpolska.pl/auth"
+  KEYCLOAK_RESOURCE: "edm"
+  KEYCLOAK_PRINCIPAL-ATTRIBUTE: "preferred_username"
+  KEYCLOAK_CREDENTIALS_SECRET: "1UoKaY8goRtjEjjc9V8QBLtj5B4Q9sLW"

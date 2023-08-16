@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: registry-cm
+data:
+  ENV: "staging"
+  # central database pod settings
+  DB_HOST: "db"
+  DB_NAME: "registry_db"
+  DB_PORT: "5432"
+  # container mount points
+  ATNA_LOG_BACKUP_PATH: "/var/edm/atna_backup"  # atna emergency location
+  # logging configuration
+  DEBUG: "0"
+  LOGLEVEL: "DEBUG"
+  # api paths used in DRF url patterns
+  ITI_57_API_PATH: "api/iti57"
+  ITI_42_API_PATH: "api/iti42"
+  ITI_18_API_PATH: "api/iti18"
+  ITI_18_REST_PATH: "api/int/iti18"
+  ITI_42_REST_PATH: "api/int/iti42"
+  ITI_57_REST_PATH: "api/int/iti57"
+  # internal path to atna logging service
+  ATNA_HOST: "atna"
+  ATNA_PORT: "8008"
+  ATNA_ENDPOINT: "api/v1/audit_event"
+  # internal path to ws-security auth service
+  AUTH_HOST: "adminer"
+  AUTH_PORT: "8009"
+  AUTH_ENDPOINT: "/api/v1/cert/verify"
+  # logging policy
+  FULL_LOGS: "1"  # 1 = log all log levels to console, 0 = file only
+  JWT_VALIDATION_URL: "https://auth.test.pomorskie.cgmpolska.pl/auth/realms/internal/protocol/openid-connect/userinfo"
+  # rabbit mq audit logs
+  MQ_AUDIT_EXCHANGE: "auditindex"
+  MQ_ROUTING_KEY: "audit-log.command.create"
+  MQ_USER: "edm"
+  MQ_HOST: "rabbit.cgm"
+  # privacy consent connectivity
+  CONSENT_HOST: "privacy-consent.cgm"
+  CONSENT_PORT: "8080"
+  CONSENT_ENDPOINT: "/api/int/consents/documents-access-verifications"

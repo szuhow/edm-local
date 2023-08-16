@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ehrbase-cm
+data:
+  ADMINAPI_ALLOWDELETEALL: 'true'
+  SYSTEM_ALLOW_TEMPLATE_OVERWRITE: 'true'

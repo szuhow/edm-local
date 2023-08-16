@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: atna-cm
+data:
+  DATABASE_HOST: db
+  DATABASE_NAME: atna_db
+  DATABASE_PORT: "5432"
+  # logging configuration
+  DEBUG: "0"
+  LOGLEVEL: "DEBUG"

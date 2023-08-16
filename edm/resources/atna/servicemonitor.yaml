@@ -1,0 +1,12 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: atna-metrics
+spec:
+  endpoints:
+  - path: /prometheus/atna/metrics
+    interval: 15s
+    targetPort: 8008
+  selector:
+    matchLabels:
+      metrics: prometheus-atna-metrics

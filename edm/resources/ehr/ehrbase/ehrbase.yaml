@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ehrbase
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ehrbase
+  template:
+    metadata:
+      labels:
+        app: ehrbase
+    spec:
+      containers:
+        - name: ehrbase
+          image: ehrbase
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: ehrbase
+            - configMapRef:
+                name: ehrbase-cm
+            - secretRef:
+                name: ehrbase
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ehrbase
+spec:
+  type: ClusterIP
+  selector:
+    app: ehrbase
+  ports:
+    - port: 8080
+      targetPort: 8080
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ehrbase
+data:
+  ENV: "staging"
+  DB_URL: "jdbc:postgresql://ehrbase-db:5432/ehrbase"
+  DB_USER_ADMIN: "postgres"
+  DB_USER: "ehrbase"
+  SECURITY_AUTHTYPE: "BASIC"
+  SECURITY_AUTHUSER: "myuser"
+  SECURITY_AUTHADMINUSER: "myadmin"
+  SYSTEM_NAME: "dev.ehrbase"
+  ADMIN_API_ACTIVE: "true"
+  SERVER_DISABLESTRICTVALIDATION: "true"
+  MANAGEMENT_ENDPOINTS_WEB_EXPOSURE: "env,health,info,metrics,prometheus"
+  MANAGEMENT_ENDPOINTS_WEB_BASEPATH: "/status"
+  MANAGEMENT_ENDPOINT_ENV_ENABLED: "true"
+  MANAGEMENT_ENDPOINT_HEALTH_ENABLED: "true"
+  MANAGEMENT_ENDPOINT_HEALTH_DATASOURCE_ENABLED: "true"
+  MANAGEMENT_ENDPOINT_INFO_ENABLED: "true"
+  MANAGEMENT_ENDPOINT_METRICS_ENABLED: "true"
+  MANAGEMENT_ENDPOINT_PROMETHEUS_ENABLED: "true"
+  MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED: "true"
+  WEB_CORS_ALLOWEDORIGINS: "http://ehrbase"
+  WEB_CORS_ALLOWEDORIGINPATTERNS: "http://ehrbase"
+  WEB_CORS_ALLOWEDMETHODS: "GET,PUT,DELETE,POST,OPTIONS"
+  WEB_CORS_ALLOWCREDENTIALS: "true"
+  TZ: "Europe/Warsaw"

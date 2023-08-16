@@ -1,0 +1,12 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: repository-metrics
+spec:
+  endpoints:
+  - path: /prometheus/repository/metrics
+    interval: 15s
+    targetPort: 8000
+  selector:
+    matchLabels:
+      metrics: prometheus-repository-metrics
