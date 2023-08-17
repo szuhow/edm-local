@@ -1,10 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: hl7parser-cm
+  name: minio-cm
 data:
-  KEYCLOAK_REALM: "internal"
-  KEYCLOAK_AUTH-SERVER-URL: "https://auth.test.pomorskie.cgmpolska.pl/auth"
-  KEYCLOAK_RESOURCE: "edm"
-  KEYCLOAK_PRINCIPAL-ATTRIBUTE: "preferred_username"
-  KEYCLOAK_CREDENTIALS_SECRET: "1UoKaY8goRtjEjjc9V8QBLtj5B4Q9sLW"
+  MINIO_ROOT_USER: minio
+  MINIO_ROOT_PASSWORD: minio123456
+  MINIO_BUCKET: fhir-bridge-bucket
+  MINIO_STORAGE_USE_HTTPS: False

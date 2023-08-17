@@ -8,3 +8,13 @@ data:
   KEYCLOAK_RESOURCE: "edm"
   KEYCLOAK_PRINCIPAL-ATTRIBUTE: "preferred_username"
   KEYCLOAK_CREDENTIALS_SECRET: "1UoKaY8goRtjEjjc9V8QBLtj5B4Q9sLW"
+  OPENEHR_URL: http://ehrbase:8080/ehrbase/rest
+  OPENEHR_USER: myuser
+  OPENEHR_PASSWORD: myPassword432
+  OPENEHR_ADMIN_USER: myadmin
+  OPENEHR_ADMIN_PASSWORD: mySuperAwesomePassword123
+  OPENEHR_MAPPING_FILES: classpath:/mapping.properties
+  FHIR_BRIDGE_URL: http://fhir-bridge:8888/fhir-bridge/
+  FHIR_BRIDGE_MINIO_URL: http://minio:9000/
+  MINIO_ACCESS_KEY: minio
+  MINIO_SECRET_KEY: minio123456
